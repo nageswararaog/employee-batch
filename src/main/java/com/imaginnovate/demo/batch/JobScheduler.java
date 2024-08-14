@@ -17,7 +17,7 @@ public class JobScheduler {
     @Autowired
     private Job job;
 
-    @Scheduled(cron = "0 11 23 * * ?")
+    @Scheduled(cron = "0 30 11 * * ?")
     public void runJob() {
         JobParameters params = new JobParametersBuilder()
                 .addString("JobID", String.valueOf(System.currentTimeMillis()))

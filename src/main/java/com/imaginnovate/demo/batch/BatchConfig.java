@@ -54,19 +54,26 @@ public class BatchConfig {
 	@Autowired
 	private ErrorLogRepository errorLogRepository;
 
+	@Autowired
+	private BatchJobCompletionListener jobCompletionListener;
+
 	@Value("${input.file.path}")
 	private String inputFilePath;
 
 	@Bean
 	public Job employeeJob() {
-		return new JobBuilder("employeeJob", jobRepository).incrementer(new RunIdIncrementer()).start(employeeStep())
-				.build();
+		return new JobBuilder("employeeJob", jobRepository)
+				.incrementer(new RunIdIncrementer())
+				.listener(jobCompletionListener)
+				.start(employeeStep()).build();
 	}
 
 	@Bean
 	public Step employeeStep() {
 		return new StepBuilder("employeeStep", jobRepository).<EmployeeDTO, Employee>chunk(100, transactionManager)
-				.reader(csvReader()).processor(processor()).writer(writer()).listener(new BatchJobCompletionListener())
+				.reader(csvReader())
+				.processor(processor())
+				.writer(writer())
 				.build();
 	}
 

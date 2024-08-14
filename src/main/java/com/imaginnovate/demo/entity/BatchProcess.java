@@ -12,8 +12,7 @@ import jakarta.persistence.Table;
 @Table(name = "batch_process", schema = "imaginnovate")
 public class BatchProcess {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 	private String processName;
 	private Timestamp startTimestamp;
 	private Timestamp endTimestamp;
@@ -22,11 +21,11 @@ public class BatchProcess {
 	private int updatedRecordCount;
 	private int erroredRecordCount;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
